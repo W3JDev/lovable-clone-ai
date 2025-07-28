@@ -1,1 +1,0 @@
-# lovable-clone-ai

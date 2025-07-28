@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY}
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run dev
+
+  # Optional: Add Redis for production rate limiting
+  # redis:
+  #   image: redis:alpine
+  #   ports:
+  #     - "6379:6379"
