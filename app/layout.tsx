@@ -1,12 +1,16 @@
 import './globals.css'
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 
 export const metadata: Metadata = {
   title: 'Lovable Clone - AI Code Generator',
   description: 'Generate web applications with AI using Gemini and DeepSeek models',
   keywords: ['AI', 'code generation', 'web development', 'Gemini', 'DeepSeek'],
   authors: [{ name: 'Lovable Clone Team' }],
-  viewport: 'width=device-width, initial-scale=1',
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
 }
 
 export default function RootLayout({
