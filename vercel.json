@@ -1,0 +1,31 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/next"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ],
+  "env": {
+    "GEMINI_API_KEY": "@gemini_api_key",
+    "DEEPSEEK_API_KEY": "@deepseek_api_key"
+  },
+  "functions": {
+    "app/api/generate/route.ts": {
+      "maxDuration": 30
+    },
+    "app/api/preview/route.ts": {
+      "maxDuration": 10
+    }
+  }
+}
