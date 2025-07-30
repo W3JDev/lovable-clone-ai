@@ -82,6 +82,30 @@ export async function POST(request: NextRequest) {
     const encoder = new TextEncoder()
     const stream = new ReadableStream({
       async start(controller) {
+        let isClosed = false
+        
+        const safeEnqueue = (data: Uint8Array) => {
+          if (!isClosed) {
+            try {
+              controller.enqueue(data)
+            } catch (error) {
+              console.warn('Controller enqueue failed:', error)
+              isClosed = true
+            }
+          }
+        }
+        
+        const safeClose = () => {
+          if (!isClosed) {
+            try {
+              controller.close()
+              isClosed = true
+            } catch (error) {
+              console.warn('Controller close failed:', error)
+            }
+          }
+        }
+
         try {
           let codeStream: AsyncIterable<string>
           
@@ -98,7 +122,7 @@ export async function POST(request: NextRequest) {
               type: 'metadata',
               generating: ['frontend', ...(fullStackResult.backend ? ['backend'] : []), ...(fullStackResult.database ? ['database'] : [])]
             })
-            controller.enqueue(encoder.encode(`data: ${metadata}\n\n`))
+            safeEnqueue(encoder.encode(`data: ${metadata}\n\n`))
           } else {
             // Use intelligent routing for single generation
             codeStream = await aiClientManager.generateWithIntelligentRouting(prompt, priority)
@@ -106,18 +130,18 @@ export async function POST(request: NextRequest) {
           
           for await (const chunk of codeStream) {
             const data = JSON.stringify({ content: chunk })
-            controller.enqueue(encoder.encode(`data: ${data}\n\n`))
+            safeEnqueue(encoder.encode(`data: ${data}\n\n`))
           }
           
-          controller.enqueue(encoder.encode('data: [DONE]\n\n'))
-          controller.close()
+          safeEnqueue(encoder.encode('data: [DONE]\n\n'))
+          safeClose()
         } catch (error) {
           console.error('Error generating code:', error)
           const errorData = JSON.stringify({ 
             error: error instanceof Error ? error.message : 'An unknown error occurred' 
           })
-          controller.enqueue(encoder.encode(`data: ${errorData}\n\n`))
-          controller.close()
+          safeEnqueue(encoder.encode(`data: ${errorData}\n\n`))
+          safeClose()
         }
       },
     })
