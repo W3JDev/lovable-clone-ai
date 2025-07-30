@@ -33,12 +33,25 @@ export function PreviewPane({ code }: PreviewPaneProps) {
       
       // Enhanced HTML processing for better preview
       if (code.includes('<!DOCTYPE html>') || code.includes('<html')) {
+        // If it's complete HTML, use it directly but ensure proper rendering
         if (code.includes('```html')) {
           const htmlMatch = code.match(/```html\n?([\s\S]*?)\n?```/)
           htmlContent = htmlMatch ? htmlMatch[1] : code
         } else {
           htmlContent = code.replace(/```[\s\S]*?\n/, '').replace(/\n?```$/, '')
         }
+        
+        // Create and set the iframe content directly for complete HTML
+        const iframe = iframeRef.current
+        const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document
+        
+        if (iframeDoc) {
+          iframeDoc.open()
+          iframeDoc.write(htmlContent)
+          iframeDoc.close()
+        }
+        
+        return // Exit early for complete HTML
       } else {
         const htmlBodyMatch = code.match(/```html\n?([\s\S]*?)\n?```/) ||
                              code.match(/<body[\s\S]*?<\/body>/) ||

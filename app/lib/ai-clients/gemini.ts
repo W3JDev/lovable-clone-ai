@@ -10,13 +10,20 @@ export class GeminiClient {
   }
 
   async generateCode(prompt: string): Promise<AsyncIterable<string>> {
-    const enhancedPrompt = `You are an expert web developer. Generate clean, modern, and functional code based on the following request. Return only the code without explanations unless specifically asked for them.
+    const enhancedPrompt = `You are an expert web developer. Generate clean, modern, and functional code based on the following request.
 
-For web applications, provide complete HTML, CSS, and JavaScript. Make the design modern, responsive, and visually appealing with proper styling.
+CRITICAL REQUIREMENTS:
+1. Always provide COMPLETE HTML documents with proper DOCTYPE, head, and body tags
+2. Include CSS styles within <style> tags in the head section - NO EXTERNAL STYLESHEETS
+3. Make designs modern, responsive, and visually appealing with professional styling
+4. Include JavaScript within <script> tags if needed
+5. Use modern CSS features: flexbox, grid, gradients, shadows, animations
+6. Ensure mobile responsiveness with proper viewport meta tag
+7. Use beautiful color schemes and typography
 
 User request: ${prompt}
 
-Please provide complete, working code that can be run directly in a browser.`
+Generate a complete, self-contained HTML file that renders beautifully in a browser with all styles included.`
 
     try {
       const result = await this.model.generateContentStream(enhancedPrompt)
@@ -38,13 +45,20 @@ Please provide complete, working code that can be run directly in a browser.`
   }
 
   async generateCodeSync(prompt: string): Promise<string> {
-    const enhancedPrompt = `You are an expert web developer. Generate clean, modern, and functional code based on the following request. Return only the code without explanations unless specifically asked for them.
+    const enhancedPrompt = `You are an expert web developer. Generate clean, modern, and functional code based on the following request.
 
-For web applications, provide complete HTML, CSS, and JavaScript. Make the design modern, responsive, and visually appealing with proper styling.
+CRITICAL REQUIREMENTS:
+1. Always provide COMPLETE HTML documents with proper DOCTYPE, head, and body tags
+2. Include CSS styles within <style> tags in the head section - NO EXTERNAL STYLESHEETS
+3. Make designs modern, responsive, and visually appealing with professional styling
+4. Include JavaScript within <script> tags if needed
+5. Use modern CSS features: flexbox, grid, gradients, shadows, animations
+6. Ensure mobile responsiveness with proper viewport meta tag
+7. Use beautiful color schemes and typography
 
 User request: ${prompt}
 
-Please provide complete, working code that can be run directly in a browser.`
+Generate a complete, self-contained HTML file that renders beautifully in a browser with all styles included.`
 
     try {
       const result = await this.model.generateContent(enhancedPrompt)
