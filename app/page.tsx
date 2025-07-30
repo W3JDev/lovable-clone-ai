@@ -651,7 +651,6 @@ Design an analytics platform that empowers data-driven decision making with ente
                             View Full Prompt
                           </button>
                         </div>
-                      </div>
                     ))}
                   </div>
                 </div>
