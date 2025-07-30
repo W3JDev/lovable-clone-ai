@@ -344,6 +344,9 @@ body {
 }
 
 /* Full-width chat interface */
+/* This class is intended for use in chat interfaces that require full-width layouts.
+   It ensures the chat container spans the entire viewport width while maintaining
+   consistent padding. */
 .chat-full-width {
   width: 100vw;
   max-width: 100vw;
