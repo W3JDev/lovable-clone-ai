@@ -1,5 +1,6 @@
 import { GeminiClient } from './gemini'
 import { DeepSeekClient } from './deepseek'
+import { aiOrchestrator } from './orchestrator'
 
 export interface AIClient {
   generateCode(prompt: string): Promise<AsyncIterable<string>>
@@ -97,6 +98,39 @@ export class AIClientManager {
       }
       
       throw error
+    }
+  }
+
+  // New orchestrated generation methods
+  async generateWithIntelligentRouting(
+    prompt: string, 
+    priority: 'speed' | 'quality' | 'cost' = 'quality'
+  ): Promise<AsyncIterable<string>> {
+    return aiOrchestrator.generateWithOrchestration(prompt, this, priority)
+  }
+
+  async generateFullStackProject(prompt: string): Promise<{
+    frontend: AsyncIterable<string>
+    backend?: AsyncIterable<string>
+    database?: AsyncIterable<string>
+  }> {
+    return aiOrchestrator.generateFullStackProject(prompt, this)
+  }
+
+  getModelCapabilities() {
+    return {
+      gemini: {
+        name: 'Gemini 2.0 Flash',
+        description: 'Google\'s latest multimodal AI with exceptional code generation',
+        strengths: ['Fast inference', 'Great for UI/UX', 'Multimodal capabilities'],
+        bestFor: ['Frontend development', 'Quick prototypes', 'Design systems']
+      },
+      deepseek: {
+        name: 'DeepSeek V3',
+        description: 'Specialized coding model with deep reasoning capabilities',
+        strengths: ['Complex logic', 'Backend systems', 'Code optimization'],
+        bestFor: ['Backend APIs', 'Algorithms', 'System architecture']
+      }
     }
   }
 }

@@ -298,6 +298,71 @@ body {
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
 }
 
+/* Stable Container Classes for Layout Stability */
+.stable-container {
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  contain: layout style paint;
+  min-height: fit-content;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.smooth-transition {
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Enhanced Performance Optimizations */
+.performance-optimized {
+  contain: layout style paint;
+  will-change: transform, opacity;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+/* Fluid Responsive Containers */
+.fluid-container {
+  width: 100%;
+  max-width: none;
+  padding-left: clamp(1rem, 4vw, 3rem);
+  padding-right: clamp(1rem, 4vw, 3rem);
+}
+
+/* Enhanced Scrolling Performance */
+.smooth-scroll {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* Prevent layout shifts during dynamic content */
+.stable-height {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* Full-width chat interface */
+/* This class is intended for use in chat interfaces that require full-width layouts.
+   It ensures the chat container spans the entire viewport width while maintaining
+   consistent padding. */
+.chat-full-width {
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  padding-left: clamp(1rem, 4vw, 3rem);
+  padding-right: clamp(1rem, 4vw, 3rem);
+}
+
+/* Enhanced GPU Acceleration */
+.gpu-accelerated {
+  transform: translate3d(0, 0, 0);
+  will-change: transform, opacity;
+  contain: layout style paint;
+}
+
 /* Utility Classes */
 .text-gradient {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
