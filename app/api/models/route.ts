@@ -5,11 +5,19 @@ export async function GET() {
   try {
     const availableModels = aiClientManager.getAvailableModels()
     const currentModel = aiClientManager.getCurrentModel()
+    const capabilities = aiClientManager.getModelCapabilities()
 
     return NextResponse.json({
       availableModels,
       currentModel,
-      status: availableModels.length > 0 ? 'healthy' : 'no_models_available'
+      capabilities,
+      status: availableModels.length > 0 ? 'healthy' : 'no_models_available',
+      features: {
+        intelligentRouting: true,
+        fullStackGeneration: true,
+        priorityOptimization: ['speed', 'quality', 'cost'],
+        supportedTypes: ['single', 'fullstack']
+      }
     })
   } catch (error) {
     console.error('Error getting models:', error)
