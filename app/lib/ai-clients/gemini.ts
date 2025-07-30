@@ -7,8 +7,16 @@ export class GeminiClient {
 
   constructor(apiKey: string) {
     this.client = new GoogleGenerativeAI(apiKey)
-    // Using Gemini 2.5 Pro for superior UI/UX design and code integration
-    this.model = this.client.getGenerativeModel({ model: 'gemini-2.5-pro' })
+    // Using Gemini 1.5 Pro (most stable available model) for superior UI/UX design and code integration
+    this.model = this.client.getGenerativeModel({ 
+      model: 'gemini-1.5-pro',
+      generationConfig: {
+        temperature: 0.7,
+        topK: 40,
+        topP: 0.95,
+        maxOutputTokens: 8192,
+      }
+    })
   }
 
   async generateCode(prompt: string): Promise<AsyncIterable<string>> {
@@ -34,8 +42,8 @@ export class GeminiClient {
       
       return generateChunks()
     } catch (error) {
-      console.error('Gemini 2.5 Pro API Error:', error)
-      throw new Error('Failed to generate code with Gemini 2.5 Pro')
+      console.error('Gemini 1.5 Pro API Error:', error)
+      throw new Error('Failed to generate code with Gemini 1.5 Pro')
     }
   }
 
@@ -47,8 +55,8 @@ export class GeminiClient {
       const result = await this.model.generateContent(perfectedPrompt)
       return result.response.text()
     } catch (error) {
-      console.error('Gemini 2.5 Pro Sync API Error:', error)
-      throw new Error('Failed to generate code with Gemini 2.5 Pro')
+      console.error('Gemini 1.5 Pro Sync API Error:', error)
+      throw new Error('Failed to generate code with Gemini 1.5 Pro')
     }
   }
 }

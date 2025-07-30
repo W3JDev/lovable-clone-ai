@@ -120,10 +120,10 @@ export class AIClientManager {
   getModelCapabilities() {
     return {
       gemini: {
-        name: 'Gemini 2.0 Flash',
-        description: 'Google\'s latest multimodal AI with exceptional code generation',
-        strengths: ['Fast inference', 'Great for UI/UX', 'Multimodal capabilities'],
-        bestFor: ['Frontend development', 'Quick prototypes', 'Design systems']
+        name: 'Gemini 1.5 Pro',
+        description: 'Google\'s advanced multimodal AI with exceptional code generation and reasoning',
+        strengths: ['Advanced reasoning', 'Multimodal capabilities', 'Large context window'],
+        bestFor: ['Complex UI/UX', 'Full-stack development', 'Design systems']
       },
       deepseek: {
         name: 'DeepSeek V3',

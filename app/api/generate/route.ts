@@ -89,8 +89,13 @@ export async function POST(request: NextRequest) {
             try {
               controller.enqueue(data)
             } catch (error) {
-              console.warn('Controller enqueue failed:', error)
-              isClosed = true
+              if (error instanceof Error && error.message.includes('Controller is already closed')) {
+                console.warn('Stream already closed, ignoring enqueue')
+                isClosed = true
+              } else {
+                console.warn('Controller enqueue failed:', error)
+                isClosed = true
+              }
             }
           }
         }
@@ -129,12 +134,15 @@ export async function POST(request: NextRequest) {
           }
           
           for await (const chunk of codeStream) {
+            if (isClosed) break
             const data = JSON.stringify({ content: chunk })
             safeEnqueue(encoder.encode(`data: ${data}\n\n`))
           }
           
-          safeEnqueue(encoder.encode('data: [DONE]\n\n'))
-          safeClose()
+          if (!isClosed) {
+            safeEnqueue(encoder.encode('data: [DONE]\n\n'))
+            safeClose()
+          }
         } catch (error) {
           console.error('Error generating code:', error)
           const errorData = JSON.stringify({ 
