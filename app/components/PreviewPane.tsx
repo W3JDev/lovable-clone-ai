@@ -108,7 +108,7 @@ export function PreviewPane({ code }: PreviewPaneProps) {
         }
     </script>
 </body>
-</html>`
+</html>
       }
 
       // Create and set the iframe content
