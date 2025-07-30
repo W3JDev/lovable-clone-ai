@@ -497,7 +497,7 @@ Design an analytics platform that empowers data-driven decision making with ente
   ]
 
   return (
-    <div className="min-h-screen min-h-[100dvh] bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 relative overflow-hidden">
+    <div className="min-h-screen min-h-[100dvh] bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 relative overflow-hidden stable-height">
       {/* Ultra Premium Background Effects */}
       <div className="absolute inset-0">
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-purple-500/5 via-blue-500/5 to-cyan-500/5 animate-gradient"></div>
@@ -549,11 +549,11 @@ Design an analytics platform that empowers data-driven decision making with ente
         </div>
 
         {/* Main Interface - Responsive */}
-        <div className={`${showPreview ? 'lg:w-1/2 w-full' : 'flex-1'} flex flex-col transition-all duration-700 ease-in-out min-w-0`}>
+        <div className={`${showPreview ? 'lg:w-1/2 w-full' : 'flex-1'} flex flex-col transition-all duration-700 ease-in-out min-w-0 stable-container`}>
           
           {/* Ultra Premium Header - Mobile Optimized */}
-          <header className="flex-shrink-0 p-4 sm:p-6 lg:p-8 border-b border-white/10 glass-ultra">
-            <div className="w-full max-w-6xl mx-auto">
+          <header className="flex-shrink-0 p-4 sm:p-6 lg:p-8 xl:p-12 border-b border-white/10 glass-ultra stable-container performance-optimized">
+            <div className="w-full fluid-container">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div className="flex items-center space-x-3 sm:space-x-4">
                   <div className="p-2 sm:p-3 rounded-xl sm:rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 shadow-lg animate-pulse-glow">
@@ -597,8 +597,8 @@ Design an analytics platform that empowers data-driven decision making with ente
           </header>
 
           {/* Messages Container - Responsive */}
-          <div className="flex-1 overflow-y-auto min-h-0">
-            <div className="w-full max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
+          <div className="flex-1 overflow-y-auto min-h-0 stable-container performance-optimized smooth-scroll">
+            <div className="w-full fluid-container py-4 sm:py-6 lg:py-8">
               
               {/* Ultra Premium Welcome State */}
               {messages.length === 0 && (
@@ -619,7 +619,7 @@ Design an analytics platform that empowers data-driven decision making with ente
                   </div>
                   
                   {/* 3D Example Cards - Responsive Grid */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-12 sm:mb-16">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-6 mb-12 sm:mb-16 w-full">
                     {examplePrompts.map((example, index) => (
                       <div
                         key={index}
@@ -658,18 +658,18 @@ Design an analytics platform that empowers data-driven decision making with ente
               )}
 
               {/* Premium Messages */}
-              <div className="space-y-8">
+              <div className="space-y-8 gpu-accelerated">
                 {messages.map((message, index) => (
                   <div 
                     key={message.id} 
-                    className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'} animate-slide-up-3d`}
+                    className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'} animate-slide-up-3d stable-container`}
                     style={{ animationDelay: `${index * 0.1}s` }}
                   >
                     <div className={`max-w-4xl ${
                       message.type === 'user' 
                         ? 'bg-gradient-to-br from-blue-500 via-purple-500 to-cyan-500 text-white card-3d' 
                         : 'glass-ultra text-white ios-card'
-                    } rounded-3xl px-8 py-6 shadow-ultra`}>
+                    } rounded-3xl px-8 py-6 shadow-ultra performance-optimized min-h-[120px]`}>
                       {message.type === 'assistant' ? (
                         <div>
                           <div className="flex items-center justify-between mb-6">
@@ -722,8 +722,8 @@ Design an analytics platform that empowers data-driven decision making with ente
                 ))}
                 
                 {isLoading && (
-                  <div className="flex justify-start animate-scale-in-3d">
-                    <div className="glass-ultra rounded-3xl px-8 py-6 ios-card">
+                  <div className="flex justify-start animate-scale-in-3d stable-container">
+                    <div className="glass-ultra rounded-3xl px-8 py-6 ios-card min-h-[120px] flex items-center">
                       <div className="flex items-center space-x-4">
                         <div className="w-3 h-3 bg-blue-400 rounded-full animate-pulse"></div>
                         <span className="text-gray-300 font-medium">Generating ultra-premium code...</span>
@@ -739,8 +739,8 @@ Design an analytics platform that empowers data-driven decision making with ente
           </div>
 
           {/* Ultra Premium Input Section - Mobile Responsive */}
-          <div className="flex-shrink-0 border-t border-white/10 glass-ultra">
-            <div className="w-full max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
+          <div className="flex-shrink-0 border-t border-white/10 glass-ultra stable-container performance-optimized">
+            <div className="w-full fluid-container py-4 sm:py-6 lg:py-8">
               <form onSubmit={handleSubmit} className="relative">
                 <div className="relative">
                   <textarea
@@ -749,7 +749,7 @@ Design an analytics platform that empowers data-driven decision making with ente
                     onChange={handleInputChange}
                     onKeyDown={handleKeyDown}
                     placeholder="Describe your vision in detail... ✨"
-                    className="input-ultra w-full text-base sm:text-lg min-h-[70px] sm:min-h-[80px] max-h-[140px] sm:max-h-[160px] pr-16 sm:pr-20 transform-gpu"
+                    className="input-ultra w-full text-base sm:text-lg min-h-[70px] sm:min-h-[80px] max-h-[140px] sm:max-h-[160px] pr-16 sm:pr-20 smooth-transition"
                     disabled={isLoading}
                   />
                   <button
