@@ -1,10 +1,10 @@
 # Lovable Clone - AI Code Generator
 
-A modern web application that replicates Lovable's functionality using AI models like Gemini 1.5 Pro and DeepSeek for code generation with real-time preview capabilities.
+A modern web application that replicates Lovable's functionality using AI models like Gemini 2.5 Pro and DeepSeek for code generation with real-time preview capabilities.
 
 ## 🚀 Features
 
-- **AI-Powered Code Generation**: Support for Gemini 1.5 Pro and DeepSeek models
+- **AI-Powered Code Generation**: Support for Gemini 2.5 Pro and DeepSeek models
 - **Real-time Streaming**: Watch code generate in real-time with streaming responses
 - **Live Preview**: Instant preview of generated HTML, CSS, and JavaScript
 - **Modern UI**: Beautiful dark theme with orange-to-pink gradient design
@@ -16,7 +16,7 @@ A modern web application that replicates Lovable's functionality using AI models
 ## 🛠️ Tech Stack
 
 - **Frontend**: Next.js 14 with App Router, TypeScript, Tailwind CSS
-- **AI Integration**: Google Gemini 1.5 Pro, DeepSeek API
+- **AI Integration**: Google Gemini 2.5 Pro, DeepSeek API
 - **Styling**: Tailwind CSS with custom gradient themes
 - **Icons**: Heroicons, Lucide React
 - **Code Highlighting**: React Syntax Highlighter
