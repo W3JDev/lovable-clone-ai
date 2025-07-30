@@ -63,6 +63,18 @@ export function DeploymentPanel({ code, isOpen, onClose }: DeploymentPanelProps)
       
       const result = await response.json()
       setDeploymentResult(result)
+      
+      // Track deployment analytics
+      if (result.success) {
+        fetch('/api/analytics', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'deployment',
+            provider: selectedProvider
+          })
+        }).catch(err => console.warn('Analytics tracking failed:', err))
+      }
     } catch (error) {
       console.error('Deployment failed:', error)
       setDeploymentResult({ error: 'Failed to generate deployment instructions' })

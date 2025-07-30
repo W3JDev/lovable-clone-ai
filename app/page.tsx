@@ -12,12 +12,14 @@ import {
   BookmarkIcon,
   Cog6ToothIcon,
   PlayIcon,
-  PauseIcon
+  PauseIcon,
+  ChartBarIcon
 } from '@heroicons/react/24/outline'
 import { CodeBlock } from './components/CodeBlock'
 import { PreviewPane } from './components/PreviewPane'
 import { LoadingDots } from './components/LoadingDots'
 import { DeploymentPanel } from './components/DeploymentPanel'
+import { AnalyticsPanel } from './components/AnalyticsPanel'
 
 interface Message {
   id: string
@@ -48,6 +50,7 @@ export default function Home() {
   const [priority, setPriority] = useState<'speed' | 'quality' | 'cost'>('quality')
   const [generateType, setGenerateType] = useState<'single' | 'fullstack'>('single')
   const [showDeployment, setShowDeployment] = useState(false)
+  const [showAnalytics, setShowAnalytics] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
@@ -75,6 +78,18 @@ export default function Home() {
     setIsLoading(true)
 
     try {
+      // Track generation analytics
+      fetch('/api/analytics', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'generation',
+          model: currentModel,
+          priority: priority,
+          generateType: generateType
+        })
+      }).catch(err => console.warn('Analytics tracking failed:', err))
+
       const response = await fetch('/api/generate', {
         method: 'POST',
         headers: {
@@ -632,6 +647,14 @@ Design an analytics platform that empowers data-driven decision making with ente
                     </button>
                   )}
                   
+                  <button 
+                    onClick={() => setShowAnalytics(true)}
+                    className="p-2 sm:p-3 glass-ultra rounded-lg sm:rounded-xl hover:bg-white/10 transition-all duration-300"
+                    title="View Analytics"
+                  >
+                    <ChartBarIcon className="w-4 h-4 sm:w-5 sm:h-5 text-gray-300" />
+                  </button>
+                  
                   <button className="p-2 sm:p-3 glass-ultra rounded-lg sm:rounded-xl hover:bg-white/10 transition-all duration-300">
                     <Cog6ToothIcon className="w-4 h-4 sm:w-5 sm:h-5 text-gray-300" />
                   </button>
@@ -853,6 +876,12 @@ Design an analytics platform that empowers data-driven decision making with ente
           code={generatedCode} 
           isOpen={showDeployment} 
           onClose={() => setShowDeployment(false)} 
+        />
+        
+        {/* Analytics Panel */}
+        <AnalyticsPanel 
+          isOpen={showAnalytics} 
+          onClose={() => setShowAnalytics(false)} 
         />
       </div>
     </div>
