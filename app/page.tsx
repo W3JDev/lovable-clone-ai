@@ -12,11 +12,14 @@ import {
   BookmarkIcon,
   Cog6ToothIcon,
   PlayIcon,
-  PauseIcon
+  PauseIcon,
+  ChartBarIcon
 } from '@heroicons/react/24/outline'
 import { CodeBlock } from './components/CodeBlock'
 import { PreviewPane } from './components/PreviewPane'
 import { LoadingDots } from './components/LoadingDots'
+import { DeploymentPanel } from './components/DeploymentPanel'
+import { AnalyticsPanel } from './components/AnalyticsPanel'
 
 interface Message {
   id: string
@@ -44,6 +47,10 @@ export default function Home() {
   const [projects, setProjects] = useState<Project[]>([])
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const [isPlaying, setIsPlaying] = useState(false)
+  const [priority, setPriority] = useState<'speed' | 'quality' | 'cost'>('quality')
+  const [generateType, setGenerateType] = useState<'single' | 'fullstack'>('single')
+  const [showDeployment, setShowDeployment] = useState(false)
+  const [showAnalytics, setShowAnalytics] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
@@ -71,12 +78,29 @@ export default function Home() {
     setIsLoading(true)
 
     try {
+      // Track generation analytics
+      fetch('/api/analytics', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'generation',
+          model: currentModel,
+          priority: priority,
+          generateType: generateType
+        })
+      }).catch(err => console.warn('Analytics tracking failed:', err))
+
       const response = await fetch('/api/generate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ prompt: userMessage.content, model: currentModel }),
+        body: JSON.stringify({ 
+          prompt: userMessage.content, 
+          model: currentModel,
+          priority: priority,
+          generateType: generateType
+        }),
       })
 
       if (!response.ok) {
@@ -561,9 +585,9 @@ Design an analytics platform that empowers data-driven decision making with ente
                   </div>
                   <div>
                     <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-blue-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent">
-                      Lovable Ultra
+                      CodeGenesis AI
                     </h1>
-                    <p className="text-gray-300 text-xs sm:text-sm mt-1">Next-generation AI development platform ✨</p>
+                    <p className="text-gray-300 text-xs sm:text-sm mt-1">Ultimate AI development platform that builds the future 🚀</p>
                   </div>
                 </div>
                 
@@ -587,6 +611,49 @@ Design an analytics platform that empowers data-driven decision making with ente
                     <option value="gemini" className="bg-gray-900">Gemini 2.0</option>
                     <option value="deepseek" className="bg-gray-900">DeepSeek V3</option>
                   </select>
+                  
+                  {/* Priority Selector */}
+                  <select 
+                    value={priority} 
+                    onChange={(e) => setPriority(e.target.value as 'speed' | 'quality' | 'cost')}
+                    className="input-ultra text-xs sm:text-sm px-2 py-1 sm:px-3 sm:py-2 flex-1 sm:flex-none"
+                    title="Generation Priority"
+                  >
+                    <option value="quality" className="bg-gray-900">🎯 Quality</option>
+                    <option value="speed" className="bg-gray-900">⚡ Speed</option>
+                    <option value="cost" className="bg-gray-900">💰 Cost</option>
+                  </select>
+                  
+                  {/* Generation Type Selector */}
+                  <select 
+                    value={generateType} 
+                    onChange={(e) => setGenerateType(e.target.value as 'single' | 'fullstack')}
+                    className="input-ultra text-xs sm:text-sm px-2 py-1 sm:px-3 sm:py-2 flex-1 sm:flex-none"
+                    title="Generation Type"
+                  >
+                    <option value="single" className="bg-gray-900">📄 Single Page</option>
+                    <option value="fullstack" className="bg-gray-900">🚀 Full-Stack</option>
+                  </select>
+                  
+                  {/* Deploy Button */}
+                  {generatedCode && (
+                    <button
+                      onClick={() => setShowDeployment(!showDeployment)}
+                      className="btn-ultra flex items-center justify-center space-x-1 text-xs sm:text-sm px-2 py-1 sm:px-3 sm:py-2"
+                      title="Deploy Project"
+                    >
+                      <ArrowDownTrayIcon className="w-3 h-3 sm:w-4 sm:h-4" />
+                      <span className="hidden sm:inline">Deploy</span>
+                    </button>
+                  )}
+                  
+                  <button 
+                    onClick={() => setShowAnalytics(true)}
+                    className="p-2 sm:p-3 glass-ultra rounded-lg sm:rounded-xl hover:bg-white/10 transition-all duration-300"
+                    title="View Analytics"
+                  >
+                    <ChartBarIcon className="w-4 h-4 sm:w-5 sm:h-5 text-gray-300" />
+                  </button>
                   
                   <button className="p-2 sm:p-3 glass-ultra rounded-lg sm:rounded-xl hover:bg-white/10 transition-all duration-300">
                     <Cog6ToothIcon className="w-4 h-4 sm:w-5 sm:h-5 text-gray-300" />
@@ -651,6 +718,7 @@ Design an analytics platform that empowers data-driven decision making with ente
                             View Full Prompt
                           </button>
                         </div>
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -802,6 +870,19 @@ Design an analytics platform that empowers data-driven decision making with ente
             </div>
           </div>
         )}
+        
+        {/* Deployment Panel */}
+        <DeploymentPanel 
+          code={generatedCode} 
+          isOpen={showDeployment} 
+          onClose={() => setShowDeployment(false)} 
+        />
+        
+        {/* Analytics Panel */}
+        <AnalyticsPanel 
+          isOpen={showAnalytics} 
+          onClose={() => setShowAnalytics(false)} 
+        />
       </div>
     </div>
   )

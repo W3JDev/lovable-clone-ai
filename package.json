@@ -1,6 +1,6 @@
 {
-  "name": "lovable-clone-ai",
-  "version": "0.1.0",
+  "name": "codegenesis-ai",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",

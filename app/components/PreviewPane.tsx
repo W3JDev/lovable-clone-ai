@@ -1,7 +1,15 @@
 'use client'
 
 import React, { useEffect, useRef, useState, useCallback } from 'react'
-import { PlayIcon, ArrowPathIcon } from '@heroicons/react/24/outline'
+import { 
+  PlayIcon, 
+  ArrowPathIcon, 
+  ArrowsPointingOutIcon,
+  DevicePhoneMobileIcon,
+  ComputerDesktopIcon,
+  ShareIcon,
+  ArrowDownTrayIcon
+} from '@heroicons/react/24/outline'
 
 interface PreviewPaneProps {
   code: string
@@ -11,6 +19,8 @@ export function PreviewPane({ code }: PreviewPaneProps) {
   const iframeRef = useRef<HTMLIFrameElement>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [viewMode, setViewMode] = useState<'desktop' | 'mobile'>('desktop')
+  const [isFullscreen, setIsFullscreen] = useState(false)
 
   const updatePreview = useCallback(async () => {
     if (!code || !iframeRef.current) return
@@ -87,7 +97,9 @@ export function PreviewPane({ code }: PreviewPaneProps) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Live Preview</title>
     <style>
-        * { box-sizing: border-box; }
+        * { 
+            box-sizing: border-box; 
+        }
         body { 
             margin: 0; 
             padding: 0; 
@@ -95,20 +107,115 @@ export function PreviewPane({ code }: PreviewPaneProps) {
             line-height: 1.6;
             background: #ffffff;
         }
+        .preview-container {
+            position: relative;
+            overflow: auto;
+            height: 100vh;
+        }
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        .btn {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        @keyframes ripple {
+            to { transform: scale(4); opacity: 0; }
+        }
         ${cssContent}
     </style>
 </head>
 <body>
-    ${bodyContent}
-    <script>
+    <div class="preview-container">
+        <div class="content-wrapper animate-fade-in">
+            ${bodyContent}
+        </div>
+    </div>
+    ${jsContent ? `<script>
+        // Enhanced interactivity with stability
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add smooth scrolling
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+            
+            // Add hover effects to cards with GPU acceleration
+            document.querySelectorAll('.card').forEach(card => {
+                card.style.transform = 'translate3d(0, 0, 0)';
+                card.style.willChange = 'transform';
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translate3d(0, -4px, 0) scale(1.02)';
+                });
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translate3d(0, 0, 0) scale(1)';
+                });
+            });
+            
+            // Add click ripple effect to buttons
+            document.querySelectorAll('.btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    const ripple = document.createElement('span');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    ripple.style.cssText = \`
+                        position: absolute;
+                        width: \${size}px;
+                        height: \${size}px;
+                        left: \${x}px;
+                        top: \${y}px;
+                        background: rgba(255, 255, 255, 0.3);
+                        border-radius: 50%;
+                        transform: scale(0);
+                        animation: ripple 0.6s linear;
+                        pointer-events: none;
+                    \`;
+                    this.style.position = 'relative';
+                    this.style.overflow = 'hidden';
+                    this.appendChild(ripple);
+                    setTimeout(() => ripple.remove(), 600);
+                });
+            });
+            
+            // Original generated JavaScript
+            try {
+                ${jsContent}
+            } catch (e) {
+                console.error('JavaScript execution error:', e);
+            }
+        });
+    </script>` : jsContent ? `<script>
         try {
             ${jsContent}
         } catch (e) {
             console.error('JavaScript execution error:', e);
         }
-    </script>
+    </script>` : ''}
 </body>
-</html>
+</html>`
       }
 
       // Create and set the iframe content
@@ -141,14 +248,45 @@ export function PreviewPane({ code }: PreviewPaneProps) {
   }, [code, updatePreview])
 
   return (
-    <div className="h-full flex flex-col bg-white/5 backdrop-blur-xl border-l border-white/10">
-      {/* Premium Header */}
-      <div className="p-4 border-b border-white/10 flex items-center justify-between">
+    <div className="h-full flex flex-col bg-white/5 backdrop-blur-xl border-l border-white/10 stable-container">
+      {/* Enhanced Premium Header */}
+      <div className="p-4 border-b border-white/10 flex items-center justify-between performance-optimized">
         <div className="flex items-center space-x-3">
           <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
           <h3 className="text-lg font-semibold text-white">Live Preview</h3>
+          <div className="flex items-center space-x-2 ml-4">
+            <button
+              onClick={() => setViewMode('desktop')}
+              className={`p-1.5 rounded-lg transition-all duration-200 ${
+                viewMode === 'desktop' 
+                  ? 'bg-blue-500/20 text-blue-300' 
+                  : 'text-gray-400 hover:text-white hover:bg-white/10'
+              }`}
+              title="Desktop view"
+            >
+              <ComputerDesktopIcon className="w-4 h-4" />
+            </button>
+            <button
+              onClick={() => setViewMode('mobile')}
+              className={`p-1.5 rounded-lg transition-all duration-200 ${
+                viewMode === 'mobile' 
+                  ? 'bg-blue-500/20 text-blue-300' 
+                  : 'text-gray-400 hover:text-white hover:bg-white/10'
+              }`}
+              title="Mobile view"
+            >
+              <DevicePhoneMobileIcon className="w-4 h-4" />
+            </button>
+          </div>
         </div>
         <div className="flex items-center space-x-2">
+          <button
+            onClick={() => setIsFullscreen(!isFullscreen)}
+            className="p-2 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200"
+            title="Toggle fullscreen"
+          >
+            <ArrowsPointingOutIcon className="w-5 h-5" />
+          </button>
           <button
             onClick={updatePreview}
             disabled={isLoading}
@@ -157,11 +295,23 @@ export function PreviewPane({ code }: PreviewPaneProps) {
           >
             <ArrowPathIcon className={`w-5 h-5 ${isLoading ? 'animate-spin' : ''}`} />
           </button>
+          <button
+            className="p-2 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200"
+            title="Share preview"
+          >
+            <ShareIcon className="w-5 h-5" />
+          </button>
+          <button
+            className="p-2 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200"
+            title="Download"
+          >
+            <ArrowDownTrayIcon className="w-5 h-5" />
+          </button>
         </div>
       </div>
 
-      {/* Preview Content */}
-      <div className="flex-1 relative">
+      {/* Enhanced Preview Content */}
+      <div className="flex-1 relative stable-container">
         {error ? (
           <div className="p-6 text-center">
             <div className="inline-flex items-center justify-center w-12 h-12 bg-red-500/20 rounded-xl mb-4">
@@ -186,18 +336,29 @@ export function PreviewPane({ code }: PreviewPaneProps) {
                 </div>
               </div>
             )}
-            <iframe
-              ref={iframeRef}
-              className="w-full h-full border-0 bg-white rounded-t-lg"
-              sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
-              title="Live Code Preview"
-              style={{ minHeight: '400px' }}
-            />
+            <div className={`w-full h-full flex items-center justify-center p-4 ${
+              isFullscreen ? 'fixed inset-0 z-50 bg-black' : ''
+            }`}>
+              <iframe
+                ref={iframeRef}
+                className={`border-0 bg-white rounded-lg shadow-2xl performance-optimized ${
+                  viewMode === 'mobile' 
+                    ? 'w-[375px] h-[667px]' 
+                    : 'w-full h-full'
+                } ${isFullscreen ? 'w-full h-full rounded-none' : ''}`}
+                sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+                title="Live Code Preview"
+                style={{ 
+                  minHeight: viewMode === 'mobile' ? '667px' : '400px',
+                  transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                }}
+              />
+            </div>
           </>
         )}
       </div>
 
-      {/* Premium Footer */}
+      {/* Enhanced Footer */}
       <div className="p-4 border-t border-white/10 bg-white/5">
         <div className="flex items-center justify-between text-xs text-gray-400">
           <div className="flex items-center space-x-2">
@@ -205,6 +366,8 @@ export function PreviewPane({ code }: PreviewPaneProps) {
             <span>Live preview</span>
             <span className="text-white/30">•</span>
             <span>Sandboxed environment</span>
+            <span className="text-white/30">•</span>
+            <span className="capitalize">{viewMode} view</span>
           </div>
           <div className="flex items-center space-x-1">
             <div className="w-2 h-2 bg-green-400 rounded-full"></div>
