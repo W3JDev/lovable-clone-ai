@@ -197,301 +197,37 @@ export default function Home() {
     { 
       icon: '🏪', 
       title: 'Coffee Shop Landing', 
-      prompt: `Create an ultra-premium coffee shop landing page with advanced enterprise-level design. Requirements:
-
-VISUAL DESIGN:
-- Hero section with full-screen video background showing coffee brewing process
-- Implement glassmorphism navigation with blur effects and transparency layers
-- Use premium typography (Inter/SF Pro) with gradient text effects
-- Color palette: Warm browns (#6B4E3D), gold accents (#D4AF37), and cream (#F5F5DC)
-- Add subtle 3D parallax scrolling effects
-
-LAYOUT STRUCTURE:
-- Fixed navigation with scroll-triggered animations
-- Hero with animated call-to-action and floating elements
-- Menu section with hover-animated cards displaying coffee items
-- Interactive map integration for store locations
-- Customer testimonials carousel with smooth transitions
-- Newsletter signup with premium form validation
-
-INTERACTIVE ELEMENTS:
-- Smooth scroll navigation with section highlighting
-- Product cards with 3D hover effects and quick-view modals
-- Shopping cart sidebar with real-time calculations
-- Mobile-responsive hamburger menu with slide animations
-- Social media integration with live Instagram feed
-
-TECHNICAL SPECIFICATIONS:
-- Fully responsive design (mobile-first approach)
-- Optimize for Core Web Vitals and accessibility (WCAG 2.1)
-- Include structured data for SEO optimization
-- Implement lazy loading for images and smooth fade-in animations
-- Add contact form with validation and success/error states
-
-Make it feel like a billion-dollar brand with attention to micro-interactions and premium aesthetics.`,
+      prompt: 'Create a premium coffee shop landing page with hero section, menu cards, and contact form',
       gradient: 'from-amber-400 to-orange-600'
     },
     { 
       icon: '📱', 
       title: 'Mobile App UI', 
-      prompt: `Design a cutting-edge mobile app interface that rivals top enterprise applications. Requirements:
-
-DESIGN SYSTEM:
-- Create a comprehensive design system with iOS/Material Design fusion
-- Implement dynamic theming with light/dark mode transitions
-- Use glassmorphism cards with backdrop blur and subtle shadows
-- Typography hierarchy using system fonts optimized for mobile readability
-- Color scheme: Primary (#007AFF), Secondary (#5856D6), Success (#34C759), Warning (#FF9500)
-
-INTERFACE COMPONENTS:
-- Bottom tab navigation with haptic feedback indicators
-- Pull-to-refresh functionality with custom animations
-- Floating action buttons with morphing states
-- Card-based content layout with smooth transitions
-- Progressive disclosure for complex information
-- Smart search with real-time suggestions and filters
-
-USER EXPERIENCE FEATURES:
-- Gesture-based navigation (swipe, pinch, long-press)
-- Contextual onboarding with interactive tutorials
-- Micro-interactions for user feedback (loading states, success animations)
-- Offline-first design with sync indicators
-- Accessibility features (VoiceOver support, Dynamic Type)
-
-ADVANCED FUNCTIONALITY:
-- Dashboard with customizable widgets and data visualization
-- User profile with avatar upload and settings management
-- Real-time notifications with smart categorization
-- Integrated chat/messaging with typing indicators
-- Biometric authentication integration
-- Multi-step forms with progress indicators
-
-TECHNICAL IMPLEMENTATION:
-- Responsive breakpoints for tablets and foldable devices
-- Performance optimizations for smooth 60fps animations
-- Progressive Web App capabilities with offline caching
-- Integration points for native device features
-- Comprehensive error handling with user-friendly messages
-
-Create an interface that feels native, intuitive, and premium at every touchpoint.`,
+      prompt: 'Design a modern mobile app interface with glassmorphism and smooth animations',
       gradient: 'from-blue-400 to-purple-600'
     },
     { 
       icon: '💼', 
-      title: 'Enterprise SaaS Dashboard', 
-      prompt: `Build a sophisticated enterprise-grade SaaS dashboard that competes with industry leaders. Requirements:
-
-EXECUTIVE OVERVIEW:
-- Real-time KPI dashboard with customizable metrics widgets
-- Interactive data visualization using charts, graphs, and heatmaps
-- Executive summary cards with trend indicators and percentage changes
-- Global filters and date range selectors with smart defaults
-- Export functionality for reports (PDF, Excel, CSV)
-
-NAVIGATION & LAYOUT:
-- Collapsible sidebar with role-based menu items
-- Breadcrumb navigation with contextual actions
-- Multi-tab interface for different data views
-- Global search with intelligent suggestions and shortcuts
-- User profile dropdown with quick settings access
-
-DATA VISUALIZATION:
-- Interactive charts (line, bar, pie, donut, scatter plots)
-- Real-time updating dashboards with WebSocket connections
-- Drill-down capabilities for detailed analysis
-- Comparison tools for period-over-period analysis
-- Heat maps for geographic or categorical data representation
-
-USER MANAGEMENT:
-- Role-based access control interface
-- Team management with invitation and permission systems
-- Activity logs and audit trails with filtering
-- User profile management with avatar uploads
-- Bulk user operations with progress indicators
-
-ENTERPRISE FEATURES:
-- Multi-tenant architecture support with organization switching
-- Advanced filtering and search across all data types
-- Notification center with real-time alerts and updates
-- Integration settings for third-party services
-- API key management and webhook configuration
-- White-label customization options
-
-TECHNICAL REQUIREMENTS:
-- Table components with sorting, filtering, and pagination
-- Responsive design that works on all screen sizes
-- Loading states and skeleton screens for better UX
-- Error boundaries with graceful error handling
-- Accessibility compliance (WCAG 2.1 AA)
-- Performance optimization for large datasets
-
-Design with the sophistication of Salesforce, the elegance of Notion, and the power of Tableau.`,
+      title: 'SaaS Dashboard', 
+      prompt: 'Build a comprehensive SaaS dashboard with charts, metrics, and user management',
       gradient: 'from-green-400 to-teal-600'
     },
     { 
       icon: '🎨', 
-      title: 'Creative Portfolio', 
-      prompt: `Create a stunning creative portfolio website that showcases artistic work at the highest level. Requirements:
-
-VISUAL IDENTITY:
-- Immersive hero section with interactive background animations
-- Typography mixing modern sans-serif with elegant serif fonts
-- Color scheme: Monochromatic base with vibrant accent colors
-- Grid-based layout with masonry-style project galleries
-- Premium photography with optimized loading and zoom functionality
-
-PORTFOLIO SHOWCASE:
-- Project grid with hover animations revealing project details
-- Individual project pages with full-screen image galleries
-- Before/after sliders for design transformations
-- Video integration with custom controls and autoplay options
-- Process documentation with step-by-step breakdowns
-- Client testimonials with rotating carousel display
-
-INTERACTIVE ELEMENTS:
-- Smooth parallax scrolling with depth layering
-- CSS Grid and Flexbox for complex responsive layouts
-- Custom cursor effects and hover interactions
-- Page transitions with smooth animations between sections
-- Interactive timeline showing career progression
-- Skills visualization with animated progress indicators
-
-CONTENT SECTIONS:
-- About page with personal story and professional journey
-- Services offered with detailed descriptions and pricing
-- Blog section for design insights and tutorials
-- Contact form with real-time validation and success states
-- Social media integration with live feed displays
-- Downloadable resume/CV with tracking analytics
-
-TECHNICAL FEATURES:
-- Lazy loading for optimized performance
-- SEO optimization with proper meta tags and structured data
-- Image optimization with WebP format and responsive sizing
-- Dark/light mode toggle with smooth transitions
-- Mobile-first responsive design with touch-optimized interactions
-- Analytics integration for visitor tracking and insights
-
-ADVANCED ANIMATIONS:
-- GSAP or Framer Motion for complex animations
-- Scroll-triggered animations with intersection observers
-- 3D CSS transforms for depth and perspective
-- Loading animations with creative progress indicators
-- Micro-interactions that delight and engage users
-
-Make it feel like a world-class creative agency website with personality and professional polish.`,
+      title: 'Portfolio Site', 
+      prompt: 'Create a creative portfolio website with 3D effects and project galleries',
       gradient: 'from-pink-400 to-red-600'
     },
     { 
       icon: '🛍️', 
       title: 'E-commerce Store', 
-      prompt: `Design a premium e-commerce platform that rivals Amazon and Shopify. Requirements:
-
-PRODUCT CATALOG:
-- Advanced product grid with multiple view options (grid, list, detailed)
-- Smart filtering system with faceted search capabilities
-- Product quick-view modals with zoom functionality
-- Comparison tool for side-by-side product evaluation
-- Wishlist functionality with social sharing options
-- Recently viewed products with personalized recommendations
-
-PRODUCT DETAILS:
-- High-resolution image gallery with 360-degree view options
-- Detailed product specifications in tabbed interface
-- Customer reviews and ratings with verified purchase badges
-- Related products carousel with intelligent suggestions
-- Stock availability indicators with restock notifications
-- Size/color variations with real-time inventory updates
-
-SHOPPING EXPERIENCE:
-- Persistent shopping cart with saved items across sessions
-- One-click checkout with multiple payment options integration
-- Guest checkout option with account creation prompts
-- Real-time shipping calculations and delivery estimates
-- Promotional code system with automatic discount applications
-- Save for later functionality and abandoned cart recovery
-
-USER ACCOUNT FEATURES:
-- Comprehensive user dashboard with order history
-- Address book management with default shipping/billing
-- Order tracking with real-time status updates and notifications
-- Return/exchange requests with guided workflow
-- Customer support chat integration with order context
-- Loyalty program integration with points and rewards display
-
-BUSINESS INTELLIGENCE:
-- Analytics dashboard for sales performance
-- Inventory management with low-stock alerts
-- Customer behavior tracking and insights
-- A/B testing framework for optimization
-- Multi-currency and multi-language support
-- Tax calculation integration for global commerce
-
-TECHNICAL IMPLEMENTATION:
-- Progressive Web App with offline browsing capabilities
-- Advanced search with autocomplete and typo tolerance
-- SEO optimization for product pages and categories
-- Performance optimization for fast page loads
-- Security features including SSL and payment protection
-- Integration capabilities with CRM and marketing tools
-
-Create an e-commerce experience that converts browsers into buyers with enterprise-level functionality.`,
+      prompt: 'Design an e-commerce product page with shopping cart and checkout flow',
       gradient: 'from-purple-400 to-indigo-600'
     },
     { 
       icon: '📊', 
       title: 'Analytics Platform', 
-      prompt: `Build a comprehensive analytics platform that rivals Google Analytics and Tableau. Requirements:
-
-DASHBOARD ARCHITECTURE:
-- Customizable dashboard builder with drag-and-drop widgets
-- Real-time data streaming with WebSocket connections
-- Multi-source data integration (APIs, databases, files)
-- Interactive charts with drill-down and zoom capabilities
-- Automated report generation with scheduled delivery
-- Executive summary views with key insights highlighting
-
-DATA VISUALIZATION:
-- Advanced chart types: line, bar, area, scatter, bubble, sankey
-- Geographic visualization with interactive maps and heatmaps
-- Funnel analysis with conversion tracking and optimization
-- Cohort analysis with retention and engagement metrics
-- Comparative analysis with period-over-period insights
-- Custom metric calculations with formula builder
-
-USER EXPERIENCE:
-- Intuitive query builder for non-technical users
-- Natural language query processing for data exploration
-- Collaborative features with shared dashboards and annotations
-- Alert system with threshold-based notifications
-- Export capabilities in multiple formats (PDF, Excel, CSV, PNG)
-- Mobile-responsive design for on-the-go analytics
-
-ENTERPRISE FEATURES:
-- Role-based access control with granular permissions
-- Data governance tools with lineage tracking
-- API integrations for popular business tools
-- White-label customization for client portals
-- Multi-tenant architecture with data isolation
-- Audit trails and compliance reporting features
-
-ADVANCED ANALYTICS:
-- Machine learning insights with trend prediction
-- Anomaly detection with automated alerts
-- Statistical analysis tools with confidence intervals
-- A/B testing framework with statistical significance
-- Customer segmentation with behavioral clustering
-- Predictive modeling with scenario planning
-
-TECHNICAL SPECIFICATIONS:
-- High-performance data processing for large datasets
-- Caching strategies for optimal query performance
-- Real-time collaboration with live cursor tracking
-- Comprehensive error handling with user guidance
-- Accessibility compliance for inclusive design
-- API documentation with interactive examples
-
-Design an analytics platform that empowers data-driven decision making with enterprise scalability.`,
+      prompt: 'Build an analytics platform with real-time data visualization and reports',
       gradient: 'from-cyan-400 to-blue-600'
     }
   ]
@@ -633,24 +369,10 @@ Design an analytics platform that empowers data-driven decision making with ente
                         <h3 className="text-base sm:text-lg font-semibold text-white mb-2 sm:mb-3 group-hover:text-blue-300 transition-colors">
                           {example.title}
                         </h3>
-                        <p className="text-xs sm:text-sm text-gray-400 leading-relaxed mb-3">
-                          Create an ultra-premium {example.title.toLowerCase()} with enterprise-level design and advanced features...
+                        <p className="text-xs sm:text-sm text-gray-400 leading-relaxed">
+                          {example.prompt.length > 80 ? example.prompt.substring(0, 80) + '...' : example.prompt}
                         </p>
-                        <div className="mt-3 sm:mt-4 flex items-center justify-between">
-                          <div className="flex items-center text-xs text-blue-400 group-hover:text-blue-300 transition-colors">
-                            <PlayIcon className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
-                            Try this template
-                          </div>
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation()
-                              alert(`MASTER PROMPT TEMPLATE - ${example.title}:\n\n${example.prompt}`)
-                            }}
-                            className="text-xs text-purple-400 hover:text-purple-300 transition-colors px-2 py-1 rounded bg-purple-500/10 hover:bg-purple-500/20"
-                          >
-                            View Full Prompt
-                          </button>
-                        </div>
+                        <div className="mt-3 sm:mt-4 flex items-center text-xs text-blue-400 group-hover:text-blue-300 transition-colors">
                           <PlayIcon className="w-4 h-4 mr-1" />
                           Try this prompt
                         </div>
