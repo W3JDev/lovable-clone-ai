@@ -31,15 +31,18 @@ export function PreviewPane({ code }: PreviewPaneProps) {
     try {
       let htmlContent = ''
       
-      // Enhanced HTML processing for better preview
+      // Check if the code contains a complete HTML document
       if (code.includes('<!DOCTYPE html>') || code.includes('<html')) {
+        // Extract complete HTML document
         if (code.includes('```html')) {
           const htmlMatch = code.match(/```html\n?([\s\S]*?)\n?```/)
           htmlContent = htmlMatch ? htmlMatch[1] : code
         } else {
+          // Remove markdown code blocks if any and extract HTML
           htmlContent = code.replace(/```[\s\S]*?\n/, '').replace(/\n?```$/, '')
         }
       } else {
+        // Extract different parts for building HTML
         const htmlBodyMatch = code.match(/```html\n?([\s\S]*?)\n?```/) ||
                              code.match(/<body[\s\S]*?<\/body>/) ||
                              code.match(/<div[\s\S]*?<\/div>/) ||
@@ -61,19 +64,14 @@ export function PreviewPane({ code }: PreviewPaneProps) {
             .replace(/```html\n?/, '')
             .replace(/\n?```$/, '')
         } else if (code.includes('<')) {
+          // If there are HTML tags but no markdown, use the raw code
           bodyContent = code
         } else {
-          bodyContent = `
-            <div style="padding: 40px; text-align: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; color: white; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
-              <div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); border-radius: 24px; padding: 40px; border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);">
-                <h1 style="font-size: 2rem; margin-bottom: 1rem; font-weight: 700;">AI Generated Content</h1>
-                <p style="font-size: 1.1rem; opacity: 0.9; margin-bottom: 2rem;">Your generated code will appear here when it contains valid HTML.</p>
-                <div style="background: rgba(0, 0, 0, 0.2); padding: 20px; border-radius: 16px; font-family: 'Monaco', 'Menlo', monospace; font-size: 0.9rem; text-align: left; white-space: pre-wrap; max-height: 300px; overflow-y: auto;">
-${code.substring(0, 500)}${code.length > 500 ? '...' : ''}
-                </div>
-              </div>
-            </div>
-          `
+          bodyContent = `<div style="padding: 20px; text-align: center;">
+            <h1>Generated Content</h1>
+            <p>Preview will appear here when HTML content is generated.</p>
+            <pre style="background: #f5f5f5; padding: 10px; text-align: left; border-radius: 5px;">${code.substring(0, 300)}${code.length > 300 ? '...' : ''}</pre>
+          </div>`
         }
 
         if (cssMatch) {
@@ -97,186 +95,51 @@ ${code.substring(0, 500)}${code.length > 500 ? '...' : ''}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultra Premium Preview</title>
+    <title>Live Preview</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        * { 
+            box-sizing: border-box; 
         }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+        body { 
+            margin: 0; 
+            padding: 0; 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
             line-height: 1.6;
-            color: #333;
-            overflow-x: hidden;
+            background: #ffffff;
         }
-        /* Single Page Container */
         .preview-container {
-            min-height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            position: relative;
+            overflow: auto;
+            height: 100vh;
         }
         .content-wrapper {
-            max-width: 1200px;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 24px;
-            padding: 40px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .preview-container {
-                padding: 10px;
-            }
-            .content-wrapper {
-                padding: 20px;
-                border-radius: 16px;
-            }
-        }
-        /* Enhanced Typography */
-        h1, h2, h3, h4, h5, h6 {
-            margin-bottom: 1rem;
-            font-weight: 700;
-            color: #2c3e50;
-        }
-        h1 { font-size: 2.5rem; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        h2 { font-size: 2rem; }
-        h3 { font-size: 1.5rem; }
-        p { margin-bottom: 1rem; color: #555; }
-        /* Enhanced Buttons */
-        .btn {
-            display: inline-block;
-            padding: 12px 24px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            text-decoration: none;
-            border-radius: 12px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            margin: 8px 4px;
-        }
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
-        }
-        /* Enhanced Cards */
-        .card {
-            background: white;
-            border-radius: 16px;
-            padding: 24px;
-            margin: 16px 0;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-        }
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
-        }
-        /* Grid System */
-        .grid {
-            display: grid;
-            gap: 20px;
-            margin: 20px 0;
-        }
-        .grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-        .grid-3 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
-        .grid-4 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
-        /* Forms */
-        .form-group {
-            margin-bottom: 20px;
-        }
-        .form-control {
-            width: 100%;
-            padding: 12px 16px;
-            border: 2px solid #e1e5e9;
-            border-radius: 12px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.8);
-        }
-        .form-control:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-        /* Navigation */
-        .nav {
-            display: flex;
-            list-style: none;
-            gap: 20px;
-            margin-bottom: 30px;
-            padding: 20px 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        }
-        .nav a {
-            text-decoration: none;
-            color: #667eea;
-            font-weight: 600;
-            padding: 8px 16px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-        .nav a:hover {
-            background: rgba(102, 126, 234, 0.1);
-            color: #764ba2;
-        }
-        /* Animations */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+            position: relative;
+            z-index: 1;
         }
         .animate-fade-in {
-            animation: fadeInUp 0.6s ease forwards;
+            animation: fadeIn 0.5s ease-in-out;
         }
-        /* Code Blocks */
-        pre, code {
-            background: #2d3748;
-            color: #e2e8f0;
-            padding: 16px;
-            border-radius: 12px;
-            font-family: 'Monaco', 'Menlo', monospace;
-            overflow-x: auto;
-            margin: 16px 0;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        /* Tables */
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            background: white;
-            border-radius: 12px;
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        .btn {
+            position: relative;
             overflow: hidden;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
         }
-        .table th,
-        .table td {
-            padding: 16px;
-            text-align: left;
-            border-bottom: 1px solid #e1e5e9;
-        }
-        .table th {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            font-weight: 600;
+        @keyframes ripple {
+            to { transform: scale(4); opacity: 0; }
         }
         ${cssContent}
     </style>
-    ${jsContent ? `<script>
-        try {
-            ${jsContent}
-        } catch (e) {
-            console.error('JavaScript execution error:', e);
-        }
-    </script>` : ''}
 </head>
 <body>
     <div class="preview-container">
@@ -285,7 +148,7 @@ ${code.substring(0, 500)}${code.length > 500 ? '...' : ''}
         </div>
     </div>
     ${jsContent ? `<script>
-        // Enhanced interactivity
+        // Enhanced interactivity with stability
         document.addEventListener('DOMContentLoaded', function() {
             // Add smooth scrolling
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -297,15 +160,19 @@ ${code.substring(0, 500)}${code.length > 500 ? '...' : ''}
                     }
                 });
             });
-            // Add hover effects to cards
+            
+            // Add hover effects to cards with GPU acceleration
             document.querySelectorAll('.card').forEach(card => {
+                card.style.transform = 'translate3d(0, 0, 0)';
+                card.style.willChange = 'transform';
                 card.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-4px) scale(1.02)';
+                    this.style.transform = 'translate3d(0, -4px, 0) scale(1.02)';
                 });
                 card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0) scale(1)';
+                    this.style.transform = 'translate3d(0, 0, 0) scale(1)';
                 });
             });
+            
             // Add click ripple effect to buttons
             document.querySelectorAll('.btn').forEach(btn => {
                 btn.addEventListener('click', function(e) {
@@ -332,15 +199,20 @@ ${code.substring(0, 500)}${code.length > 500 ? '...' : ''}
                     setTimeout(() => ripple.remove(), 600);
                 });
             });
-        });
-        // Add ripple animation
-        const style = document.createElement('style');
-        style.textContent = \`
-            @keyframes ripple {
-                to { transform: scale(4); opacity: 0; }
+            
+            // Original generated JavaScript
+            try {
+                ${jsContent}
+            } catch (e) {
+                console.error('JavaScript execution error:', e);
             }
-        \`;
-        document.head.appendChild(style);
+        });
+    </script>` : jsContent ? `<script>
+        try {
+            ${jsContent}
+        } catch (e) {
+            console.error('JavaScript execution error:', e);
+        }
     </script>` : ''}
 </body>
 </html>`
@@ -366,197 +238,140 @@ ${code.substring(0, 500)}${code.length > 500 ? '...' : ''}
 
   useEffect(() => {
     if (code) {
+      // Small delay to ensure iframe is ready
       const timer = setTimeout(() => {
         updatePreview()
-      }, 200)
+      }, 100)
       
       return () => clearTimeout(timer)
     }
   }, [code, updatePreview])
 
-  const downloadProject = () => {
-    if (!code) return
-    const blob = new Blob([code], { type: 'text/html' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `project_${Date.now()}.html`
-    document.body.appendChild(a)
-    a.click()
-    document.body.removeChild(a)
-    URL.revokeObjectURL(url)
-  }
-
-  const shareProject = async () => {
-    if (navigator.share && code) {
-      try {
-        await navigator.share({
-          title: 'AI Generated Project',
-          text: 'Check out this AI-generated code!',
-          url: window.location.href,
-        })
-      } catch (err) {
-        console.log('Error sharing:', err)
-      }
-    } else {
-      // Fallback: copy to clipboard
-      await navigator.clipboard.writeText(window.location.href)
-    }
-  }
-
   return (
-    <div className="h-full flex flex-col glass-ultra">
-      {/* Ultra Premium Header - Mobile Responsive */}
-      <div className="flex-shrink-0 p-4 sm:p-6 border-b border-white/10 bg-gradient-to-r from-white/5 to-white/10">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 mb-3 sm:mb-4">
-          <div className="flex items-center space-x-2 sm:space-x-3">
-            <div className="w-3 h-3 sm:w-4 sm:h-4 bg-green-400 rounded-full animate-pulse shadow-lg shadow-green-400/50"></div>
-            <h3 className="text-lg sm:text-xl font-bold text-white">Live Preview</h3>
-            <span className="px-2 py-1 bg-green-400/20 rounded-full text-xs text-green-300 font-medium">
-              Ultra HD
-            </span>
-          </div>
-          
-          <div className="flex items-center space-x-1 sm:space-x-2">
-            <button
-              onClick={updatePreview}
-              disabled={isLoading}
-              className="p-2 glass-ultra rounded-lg sm:rounded-xl hover:bg-white/10 transition-all duration-300 group"
-              title="Refresh preview"
-            >
-              <ArrowPathIcon className={`w-4 h-4 sm:w-5 sm:h-5 text-gray-300 group-hover:text-white transition-colors ${isLoading ? 'animate-spin' : ''}`} />
-            </button>
-            
-            <button
-              onClick={shareProject}
-              className="p-2 glass-ultra rounded-lg sm:rounded-xl hover:bg-white/10 transition-all duration-300 group"
-              title="Share project"
-            >
-              <ShareIcon className="w-4 h-4 sm:w-5 sm:h-5 text-gray-300 group-hover:text-white transition-colors" />
-            </button>
-            
-            <button
-              onClick={downloadProject}
-              className="p-2 glass-ultra rounded-lg sm:rounded-xl hover:bg-white/10 transition-all duration-300 group"
-              title="Download project"
-            >
-              <ArrowDownTrayIcon className="w-4 h-4 sm:w-5 sm:h-5 text-gray-300 group-hover:text-white transition-colors" />
-            </button>
-          </div>
-        </div>
-        
-        {/* Device Toggle - Mobile Responsive */}
-        <div className="flex items-center space-x-2">
-          <div className="glass-ultra rounded-lg sm:rounded-xl p-1 flex">
+    <div className="h-full flex flex-col bg-white/5 backdrop-blur-xl border-l border-white/10 stable-container">
+      {/* Enhanced Premium Header */}
+      <div className="p-4 border-b border-white/10 flex items-center justify-between performance-optimized">
+        <div className="flex items-center space-x-3">
+          <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+          <h3 className="text-lg font-semibold text-white">Live Preview</h3>
+          <div className="flex items-center space-x-2 ml-4">
             <button
               onClick={() => setViewMode('desktop')}
-              className={`p-1.5 sm:p-2 rounded-md sm:rounded-lg transition-all duration-300 ${
+              className={`p-1.5 rounded-lg transition-all duration-200 ${
                 viewMode === 'desktop' 
-                  ? 'bg-blue-500 text-white shadow-lg' 
+                  ? 'bg-blue-500/20 text-blue-300' 
                   : 'text-gray-400 hover:text-white hover:bg-white/10'
               }`}
+              title="Desktop view"
             >
-              <ComputerDesktopIcon className="w-3 h-3 sm:w-4 sm:h-4" />
+              <ComputerDesktopIcon className="w-4 h-4" />
             </button>
             <button
               onClick={() => setViewMode('mobile')}
-              className={`p-1.5 sm:p-2 rounded-md sm:rounded-lg transition-all duration-300 ${
+              className={`p-1.5 rounded-lg transition-all duration-200 ${
                 viewMode === 'mobile' 
-                  ? 'bg-blue-500 text-white shadow-lg' 
+                  ? 'bg-blue-500/20 text-blue-300' 
                   : 'text-gray-400 hover:text-white hover:bg-white/10'
               }`}
+              title="Mobile view"
             >
-              <DevicePhoneMobileIcon className="w-3 h-3 sm:w-4 sm:h-4" />
+              <DevicePhoneMobileIcon className="w-4 h-4" />
             </button>
           </div>
-          
-          <div className="flex-1"></div>
-          
+        </div>
+        <div className="flex items-center space-x-2">
           <button
             onClick={() => setIsFullscreen(!isFullscreen)}
-            className="p-1.5 sm:p-2 glass-ultra rounded-lg sm:rounded-xl hover:bg-white/10 transition-all duration-300 group"
+            className="p-2 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200"
             title="Toggle fullscreen"
           >
-            <ArrowsPointingOutIcon className="w-3 h-3 sm:w-4 sm:h-4 text-gray-300 group-hover:text-white transition-colors" />
+            <ArrowsPointingOutIcon className="w-5 h-5" />
+          </button>
+          <button
+            onClick={updatePreview}
+            disabled={isLoading}
+            className="p-2 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200"
+            title="Refresh preview"
+          >
+            <ArrowPathIcon className={`w-5 h-5 ${isLoading ? 'animate-spin' : ''}`} />
+          </button>
+          <button
+            className="p-2 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200"
+            title="Share preview"
+          >
+            <ShareIcon className="w-5 h-5" />
+          </button>
+          <button
+            className="p-2 text-gray-300 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200"
+            title="Download"
+          >
+            <ArrowDownTrayIcon className="w-5 h-5" />
           </button>
         </div>
       </div>
 
-      {/* Preview Content - Responsive */}
-      <div className="flex-1 relative bg-gradient-to-br from-gray-100 to-gray-200 p-3 sm:p-6 min-h-0">
+      {/* Enhanced Preview Content */}
+      <div className="flex-1 relative stable-container">
         {error ? (
-          <div className="flex items-center justify-center h-full">
-            <div className="text-center max-w-md">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-red-500/20 rounded-2xl mb-6">
-                <span className="text-red-400 text-2xl">⚠️</span>
-              </div>
-              <h4 className="text-gray-800 font-bold text-lg mb-3">Preview Error</h4>
-              <p className="text-gray-600 mb-6 leading-relaxed">{error}</p>
-              <button 
-                onClick={updatePreview}
-                className="btn-ultra bg-gradient-to-r from-red-500 to-pink-500"
-              >
-                Try Again
-              </button>
+          <div className="p-6 text-center">
+            <div className="inline-flex items-center justify-center w-12 h-12 bg-red-500/20 rounded-xl mb-4">
+              <span className="text-red-400 text-xl">⚠️</span>
             </div>
+            <h4 className="text-white font-medium mb-2">Preview Error</h4>
+            <p className="text-sm text-gray-400 mb-4">{error}</p>
+            <button 
+              onClick={updatePreview}
+              className="px-4 py-2 bg-gradient-to-r from-orange-500 to-pink-500 text-white text-sm rounded-xl hover:from-orange-600 hover:to-pink-600 transition-all duration-200"
+            >
+              Try Again
+            </button>
           </div>
         ) : (
-          <div className="h-full relative">
+          <>
             {isLoading && (
-              <div className="absolute inset-0 bg-white/80 backdrop-blur-sm flex items-center justify-center z-10 rounded-2xl">
-                <div className="text-center">
-                  <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-500/20 rounded-2xl mb-4">
-                    <ArrowPathIcon className="w-8 h-8 animate-spin text-blue-500" />
-                  </div>
-                  <p className="text-gray-700 font-medium">Rendering ultra-premium preview...</p>
+              <div className="absolute inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-10">
+                <div className="text-white flex items-center space-x-3 bg-white/10 px-6 py-3 rounded-xl backdrop-blur-sm border border-white/20">
+                  <ArrowPathIcon className="w-5 h-5 animate-spin text-orange-400" />
+                  <span>Rendering preview...</span>
                 </div>
               </div>
             )}
-            
-            <div className={`h-full ${
-              viewMode === 'mobile' 
-                ? 'max-w-sm mx-auto' 
-                : 'w-full'
-            } transition-all duration-500 ease-in-out`}>
-              <div className={`h-full ${
-                viewMode === 'mobile' 
-                  ? 'rounded-2xl sm:rounded-3xl border-4 sm:border-8 border-gray-800 shadow-2xl bg-black p-0.5 sm:p-1' 
-                  : 'rounded-xl sm:rounded-2xl shadow-2xl overflow-hidden border border-gray-300'
-              }`}>
-                <iframe
-                  ref={iframeRef}
-                  className={`w-full h-full border-0 ${
-                    viewMode === 'mobile' 
-                      ? 'rounded-xl sm:rounded-2xl bg-white' 
-                      : 'rounded-lg sm:rounded-xl bg-white'
-                  } transition-all duration-300`}
-                  sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-downloads"
-                  title="Ultra Premium Live Preview"
-                  style={{ minHeight: '300px' }}
-                />
-              </div>
+            <div className={`w-full h-full flex items-center justify-center p-4 ${
+              isFullscreen ? 'fixed inset-0 z-50 bg-black' : ''
+            }`}>
+              <iframe
+                ref={iframeRef}
+                className={`border-0 bg-white rounded-lg shadow-2xl performance-optimized ${
+                  viewMode === 'mobile' 
+                    ? 'w-[375px] h-[667px]' 
+                    : 'w-full h-full'
+                } ${isFullscreen ? 'w-full h-full rounded-none' : ''}`}
+                sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+                title="Live Code Preview"
+                style={{ 
+                  minHeight: viewMode === 'mobile' ? '667px' : '400px',
+                  transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                }}
+              />
             </div>
-          </div>
+          </>
         )}
       </div>
 
-      {/* Ultra Premium Footer */}
-      <div className="p-4 border-t border-white/10 bg-gradient-to-r from-white/5 to-white/10">
-        <div className="flex items-center justify-between text-sm">
-          <div className="flex items-center space-x-3">
-            <div className="flex items-center space-x-2">
-              <PlayIcon className="w-4 h-4 text-green-400" />
-              <span className="text-gray-300 font-medium">Live Preview</span>
-            </div>
-            <span className="text-gray-500">•</span>
-            <span className="text-gray-400">Sandboxed Environment</span>
-            <span className="text-gray-500">•</span>
-            <span className="text-gray-400 capitalize">{viewMode} View</span>
-          </div>
-          
+      {/* Enhanced Footer */}
+      <div className="p-4 border-t border-white/10 bg-white/5">
+        <div className="flex items-center justify-between text-xs text-gray-400">
           <div className="flex items-center space-x-2">
-            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-            <span className="text-green-400 font-medium">Ready</span>
+            <PlayIcon className="w-4 h-4 text-green-400" />
+            <span>Live preview</span>
+            <span className="text-white/30">•</span>
+            <span>Sandboxed environment</span>
+            <span className="text-white/30">•</span>
+            <span className="capitalize">{viewMode} view</span>
+          </div>
+          <div className="flex items-center space-x-1">
+            <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+            <span>Ready</span>
           </div>
         </div>
       </div>
