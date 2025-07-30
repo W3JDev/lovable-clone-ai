@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json()
-    const { prompt, model } = body
+    const { prompt, model, priority = 'quality', generateType = 'single' } = body
 
     if (!prompt || typeof prompt !== 'string') {
       return NextResponse.json(
@@ -49,9 +49,17 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    if (prompt.length > 2000) {
+    if (prompt.length > 5000) {
       return NextResponse.json(
-        { error: 'Prompt is too long. Maximum 2000 characters allowed.' },
+        { error: 'Prompt is too long. Maximum 5000 characters allowed for enterprise features.' },
+        { status: 400 }
+      )
+    }
+
+    // Validate priority
+    if (priority && !['speed', 'quality', 'cost'].includes(priority)) {
+      return NextResponse.json(
+        { error: 'Priority must be one of: speed, quality, cost' },
         { status: 400 }
       )
     }
@@ -75,7 +83,26 @@ export async function POST(request: NextRequest) {
     const stream = new ReadableStream({
       async start(controller) {
         try {
-          const codeStream = await aiClientManager.generateCodeWithFallback(prompt)
+          let codeStream: AsyncIterable<string>
+          
+          // Use intelligent routing for enhanced generation
+          if (generateType === 'fullstack') {
+            // Handle full-stack generation
+            const fullStackResult = await aiClientManager.generateFullStackProject(prompt)
+            
+            // For now, just stream the frontend (could be enhanced to stream all parts)
+            codeStream = fullStackResult.frontend
+            
+            // Send metadata about what's being generated
+            const metadata = JSON.stringify({ 
+              type: 'metadata',
+              generating: ['frontend', ...(fullStackResult.backend ? ['backend'] : []), ...(fullStackResult.database ? ['database'] : [])]
+            })
+            controller.enqueue(encoder.encode(`data: ${metadata}\n\n`))
+          } else {
+            // Use intelligent routing for single generation
+            codeStream = await aiClientManager.generateWithIntelligentRouting(prompt, priority)
+          }
           
           for await (const chunk of codeStream) {
             const data = JSON.stringify({ content: chunk })

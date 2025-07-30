@@ -2,10 +2,10 @@ import './globals.css'
 import type { Metadata, Viewport } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Lovable Clone - AI Code Generator',
-  description: 'Generate web applications with AI using Gemini and DeepSeek models',
-  keywords: ['AI', 'code generation', 'web development', 'Gemini', 'DeepSeek'],
-  authors: [{ name: 'Lovable Clone Team' }],
+  title: 'CodeGenesis AI - Ultimate AI Development Platform',
+  description: 'The most advanced AI-powered development platform for full-stack applications. Generate complete projects with enterprise-grade features.',
+  keywords: ['AI', 'code generation', 'full-stack development', 'enterprise', 'deployment', 'collaboration', 'Gemini', 'DeepSeek'],
+  authors: [{ name: 'CodeGenesis AI Team' }],
 }
 
 export const viewport: Viewport = {
