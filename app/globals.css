@@ -150,6 +150,43 @@ body {
   animation: scale-in-3d 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
+/* SILICON VALLEY GPU OPTIMIZATION REVOLUTION */
+.transform3d-gpu {
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.transform-gpu-optimized {
+  transform: translate3d(0, 0, 0);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+  contain: layout style paint;
+}
+
+.sticky-gpu-optimized {
+  position: sticky;
+  top: 0;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  contain: layout style;
+}
+
+.contain-layout {
+  contain: layout;
+}
+
+.contain-layout-style {
+  contain: layout style;
+}
+
+.contain-layout-style-paint {
+  contain: layout style paint;
+}
+
 .animate-slide-up-3d {
   animation: slide-up-3d 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }

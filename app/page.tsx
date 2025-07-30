@@ -233,16 +233,16 @@ export default function Home() {
   ]
 
   return (
-    <div className="min-h-screen min-h-[100dvh] bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 relative overflow-hidden">
-      {/* Ultra Premium Background Effects */}
-      <div className="absolute inset-0">
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-purple-500/5 via-blue-500/5 to-cyan-500/5 animate-gradient"></div>
-        <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-blue-600/10 to-transparent rounded-full blur-3xl animate-float-3d"></div>
-        <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-to-tl from-purple-600/10 to-transparent rounded-full blur-3xl animate-float-3d delay-2000"></div>
-        <div className="absolute top-1/4 right-1/4 w-48 h-48 sm:w-96 sm:h-96 bg-gradient-to-br from-cyan-400/5 to-transparent rounded-full blur-2xl animate-pulse-glow"></div>
+    <div className="min-h-screen min-h-[100dvh] bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 relative overflow-hidden will-change-transform transform-gpu-optimized">
+      {/* Ultra Premium Background Effects - GPU OPTIMIZED */}
+      <div className="absolute inset-0 will-change-transform">
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-purple-500/5 via-blue-500/5 to-cyan-500/5 animate-gradient transform3d-gpu"></div>
+        <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-blue-600/10 to-transparent rounded-full blur-3xl animate-float-3d transform3d-gpu"></div>
+        <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-to-tl from-purple-600/10 to-transparent rounded-full blur-3xl animate-float-3d delay-2000 transform3d-gpu"></div>
+        <div className="absolute top-1/4 right-1/4 w-48 h-48 sm:w-96 sm:h-96 bg-gradient-to-br from-cyan-400/5 to-transparent rounded-full blur-2xl animate-pulse-glow transform3d-gpu"></div>
       </div>
       
-      <div className="relative z-10 flex flex-col lg:flex-row h-screen h-[100dvh]">
+      <div className="relative z-10 flex flex-col lg:flex-row h-screen h-[100dvh] contain-layout-style-paint">
         {/* Ultra Premium Sidebar - Mobile Responsive */}
         <div className="hidden lg:flex lg:flex-col lg:w-80 xl:w-96 border-r border-white/10 glass-ultra">
           <div className="flex-shrink-0 p-4 lg:p-6 border-b border-white/10">
@@ -284,19 +284,19 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Main Interface - Responsive */}
-        <div className={`${showPreview ? 'lg:w-1/2 w-full' : 'flex-1'} flex flex-col transition-all duration-700 ease-in-out min-w-0`}>
+        {/* Main Interface - FULL WIDTH RESPONSIVE REVOLUTION */}
+        <div className={`${showPreview ? 'lg:w-1/2 w-full' : 'flex-1'} flex flex-col transition-all duration-700 ease-in-out min-w-0 will-change-transform transform3d-gpu`}>
           
-          {/* Ultra Premium Header - Mobile Optimized */}
-          <header className="flex-shrink-0 p-4 sm:p-6 lg:p-8 border-b border-white/10 glass-ultra">
-            <div className="w-full max-w-6xl mx-auto">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          {/* Ultra Premium Header - FULL WIDTH LIBERATION */}
+          <header className="flex-shrink-0 px-4 sm:px-6 lg:px-8 py-4 sm:py-6 border-b border-white/10 glass-ultra will-change-transform transform3d-gpu">
+            <div className="w-full">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 contain-layout">
                 <div className="flex items-center space-x-3 sm:space-x-4">
-                  <div className="p-2 sm:p-3 rounded-xl sm:rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 shadow-lg animate-pulse-glow">
+                  <div className="p-2 sm:p-3 rounded-xl sm:rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 shadow-lg animate-pulse-glow will-change-transform">
                     <SparklesIcon className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                   </div>
                   <div>
-                    <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-blue-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent">
+                    <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-blue-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent will-change-transform">
                       Lovable Ultra
                     </h1>
                     <p className="text-gray-300 text-xs sm:text-sm mt-1">Next-generation AI development platform ✨</p>
@@ -332,18 +332,18 @@ export default function Home() {
             </div>
           </header>
 
-          {/* Messages Container - Responsive */}
-          <div className="flex-1 overflow-y-auto min-h-0">
-            <div className="w-full max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
+          {/* Messages Container - FULL WIDTH RESPONSIVE REVOLUTION */}
+          <div className="flex-1 overflow-y-auto min-h-0 will-change-scroll contain-layout-style">
+            <div className="w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6 min-h-full">
               
-              {/* Ultra Premium Welcome State */}
+              {/* Ultra Premium Welcome State - FULL WIDTH */}
               {messages.length === 0 && (
-                <div className="text-center py-8 sm:py-12 lg:py-20 animate-scale-in-3d">
+                <div className="text-center py-8 sm:py-12 lg:py-20 animate-scale-in-3d will-change-transform">
                   <div className="mb-8 sm:mb-12">
-                    <div className="inline-flex p-4 sm:p-6 rounded-2xl sm:rounded-3xl glass-ultra mb-6 sm:mb-8 card-3d">
+                    <div className="inline-flex p-4 sm:p-6 rounded-2xl sm:rounded-3xl glass-ultra mb-6 sm:mb-8 card-3d transform3d-gpu">
                       <CommandLineIcon className="w-12 h-12 sm:w-16 sm:h-16 text-blue-300" />
                     </div>
-                    <h2 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 perspective-1000">
+                    <h2 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 perspective-1000 will-change-transform">
                       Build the future with{' '}
                       <span className="text-gradient animate-gradient">
                         AI precision
@@ -463,10 +463,10 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Ultra Premium Input Section - Mobile Responsive */}
-          <div className="flex-shrink-0 border-t border-white/10 glass-ultra">
-            <div className="w-full max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
-              <form onSubmit={handleSubmit} className="relative">
+          {/* Ultra Premium Input Section - FULL WIDTH RESPONSIVE REVOLUTION */}
+          <div className="flex-shrink-0 border-t border-white/10 glass-ultra will-change-transform">
+            <div className="w-full px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+              <form onSubmit={handleSubmit} className="relative contain-layout">
                 <div className="relative">
                   <textarea
                     ref={textareaRef}
@@ -474,13 +474,13 @@ export default function Home() {
                     onChange={handleInputChange}
                     onKeyDown={handleKeyDown}
                     placeholder="Describe your vision in detail... ✨"
-                    className="input-ultra w-full text-base sm:text-lg min-h-[70px] sm:min-h-[80px] max-h-[140px] sm:max-h-[160px] pr-16 sm:pr-20 transform-gpu"
+                    className="input-ultra w-full text-base sm:text-lg min-h-[70px] sm:min-h-[80px] max-h-[140px] sm:max-h-[160px] pr-16 sm:pr-20 transform3d-gpu will-change-scroll"
                     disabled={isLoading}
                   />
                   <button
                     type="submit"
                     disabled={isLoading || !input.trim()}
-                    className="absolute bottom-3 sm:bottom-4 right-3 sm:right-4 btn-ultra p-3 sm:p-4 rounded-xl sm:rounded-2xl"
+                    className="absolute bottom-3 sm:bottom-4 right-3 sm:right-4 btn-ultra p-3 sm:p-4 rounded-xl sm:rounded-2xl will-change-transform"
                   >
                     <ArrowUpIcon className="w-5 h-5 sm:w-6 sm:h-6" />
                   </button>
