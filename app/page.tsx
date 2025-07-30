@@ -651,9 +651,6 @@ Design an analytics platform that empowers data-driven decision making with ente
                             View Full Prompt
                           </button>
                         </div>
-                          <PlayIcon className="w-4 h-4 mr-1" />
-                          Try this prompt
-                        </div>
                       </div>
                     ))}
                   </div>
